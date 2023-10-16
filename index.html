@@ -1,0 +1,84 @@
+<DOCTYPE html>
+<html>
+    <head>
+        <title>Willmil11's world</title>
+    </head>
+    <body>
+        <div id="content">
+            <div id="sidebar">
+                <p class="sidebar-text">Hello there</p>
+            </div>
+            <div id="scrollable">
+                <h1 id="hello-there" class="title">Hello there</h1>
+                <p class="text">
+                    Hello there, i'm Willmil11, i am a young teen french programmer
+                </p>
+            </div>
+        </div>
+    </body>
+</html>
+<!-- Temporary token checker-->
+<script>
+    var error = function(){
+        var content = document.getElementById("content");
+        content.innerHTML = "";
+        var textbox = document.createElement("div");
+        content.style.backgroundColor = "rgb(21, 21, 20)";
+        document.body.style.margin = "0px";
+        textbox.style.backgroundColor = "rgb(31, 31, 30)";
+        var text = document.createElement("h1");
+        text.innerHTML = "This page is under development, please come back later :)";
+        text.style.color = "white";
+        text.style.fontFamily = "Arial";
+        textbox.style.width = "fit-content";
+        textbox.style.height = "fit-content";
+        textbox.appendChild(text);
+        content.appendChild(textbox);
+            
+        var style = function(){
+            content.style.height = (window.innerHeight + "px");
+            content.style.width = (window.innerWidth + "px");
+            var sizeref;
+            if (window.innerWidth > window.innerHeight){
+                sizeref = window.innerWidth;
+            }
+            else{
+                sizeref = window.innerHeight;
+            }
+            textbox.style.padding = ((sizeref / 400) + "px");
+            textbox.style.border = ((sizeref / 400) + "px solid white");
+            textbox.style.borderRadius = ((sizeref / 100) + "px");
+
+            var text = document.getElementsByTagName("h1")[0];
+            text.style.fontSize = ((sizeref / 20) + "px");
+
+            textbox.style.marginTop = ((window.innerHeight / 2) - (textbox.offsetHeight / 2) + "px");
+            textbox.style.marginLeft = ((window.innerWidth / 2) - (textbox.offsetWidth / 2) + "px");
+        }
+
+        style();
+
+        var oldWidth = window.innerWidth;
+        var oldWidth = window.innerHeight;
+        
+        setInterval(function(){
+            if ((!(oldWidth === window.innerWidth)) || (!(oldHeight === window.innerHeight))){
+                style();
+                oldWidth = window.innerWidth;
+                oldHeight = window.innerHeight;
+            }
+        }, 25)
+    }
+    try{
+        document.body.style.margin = "0px";
+        var token = localStorage.getItem("token");
+
+        if (token == null){
+            error();
+        }
+    }
+    catch (error){
+        error();
+    }
+</script>
+<script src="./Js/app.js"></script>

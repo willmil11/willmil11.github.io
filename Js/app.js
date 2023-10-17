@@ -9,6 +9,12 @@ var sidebar_title = document.getElementById("sidebar-title");
 var my_projects = document.getElementById("my-projects");
 var my_projects_sidebar = document.getElementById("my-projects-sidebar");
 
+var my_coding_skills = document.getElementById("my-coding-skills");
+var my_coding_skills_sidebar = document.getElementById("my-coding-skills-sidebar");
+
+var contact_me = document.getElementById("contact-me");
+var contact_me_sidebar = document.getElementById("contact-me-sidebar");
+
 document.body.style.margin = "0px";
 content.style.backgroundColor = "rgb(21, 21, 20)";
 document.body.style.overflow = "hidden";
@@ -44,6 +50,16 @@ my_projects_sidebar.onclick = function () {
     my_projects.scrollIntoView();
 }
 
+my_coding_skills_sidebar.onclick = function () {
+    //Focus on my_coding_skills
+    my_coding_skills.scrollIntoView();
+}
+
+contact_me_sidebar.onclick = function () {
+    //Focus on contact_me
+    contact_me.scrollIntoView();
+}
+
 var link = document.getElementsByClassName("link");
 var index = 0;
 while (index < link.length) {
@@ -67,7 +83,7 @@ var style = function () {
     content.style.width = (window.innerWidth + "px");
     sidebar.style.height = (window.innerHeight + "px");
     sidebar.style.width = ((window.innerWidth / 4) + "px");
-    
+
     var link = document.getElementsByClassName("link");
     var sidebar_texts = document.getElementsByClassName("sidebar-text");
     var titles = document.getElementsByClassName("title");
@@ -99,6 +115,15 @@ var style = function () {
         sidebar_texts[index].style.color = "rgb(255, 255, 255)";
         sidebar_texts[index].style.fontFamily = "Arial";
         sidebar_texts[index].style.marginLeft = ((window.innerWidth / 100) + "px");
+        sidebar_texts[index].style.cursor = "pointer";
+        (function(item){
+            item.onmouseover = function () {
+                item.style.color = "rgb(5, 160, 240)";
+            }
+            item.onmouseout = function () {
+                item.style.color = "rgb(255, 255, 255)";
+            }
+        })(sidebar_texts[index]);
         index += 1;
     }
 

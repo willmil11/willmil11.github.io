@@ -162,6 +162,13 @@ var style = function () {
             item.onmouseout = function () {
                 item.style.color = "rgb(80, 255, 80)";
             }
+            item.onclick = function(){
+                //Send href to window (this is an iframe)
+                window.top.postMessage(JSON.stringify({
+                    "type": "redirect",
+                    "data": item.href
+                }), "*");
+            }
         })(link[index]);
         index += 1;
     }

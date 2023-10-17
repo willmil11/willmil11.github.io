@@ -21,6 +21,22 @@ var style = function(){
         document.title = iframe.contentWindow.document.title;
         var oldHeight = window.innerHeight;
         var oldWidth = window.innerWidth;
+
+        window.onmessage = function(event) {
+            var data;
+            try{
+                data = JSON.parse(event.data);
+            }
+            catch (error){
+                return;
+            }
+            if (data.type === "redirect"){
+                window.location.href = data.data;
+            }
+            else{
+                return;
+            }
+        };
         
         setInterval(function(){
             if ((!(oldHeight === window.innerHeight)) || (!(oldWidth === window.innerWidth))){
@@ -45,6 +61,22 @@ var style = function(){
         document.title = iframe.contentWindow.document.title;
         var oldHeight = window.innerHeight;
         var oldWidth = window.innerWidth;
+
+        window.onmessage = function(event) {
+            var data;
+            try{
+                data = JSON.parse(event.data);
+            }
+            catch (error){
+                return;
+            }
+            if (data.type === "redirect"){
+                window.location.href = data.data;
+            }
+            else{
+                return;
+            }
+        };
 
         setInterval(function(){
             if ((!(oldHeight === window.innerHeight)) || (!(oldWidth === window.innerWidth))){

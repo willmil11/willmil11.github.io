@@ -82,7 +82,9 @@ var style = function () {
     content.style.height = (window.innerHeight + "px");
     content.style.width = (window.innerWidth + "px");
     sidebar.style.height = (window.innerHeight + "px");
-    sidebar.style.width = ((window.innerWidth / 4) + "px");
+    sidebar.style.width = "fit-content"
+    sidebar.style.paddingRight = ((window.innerWidth / 100) + "px");
+    sidebar.style.paddingLeft = ((window.innerWidth / 100) + "px");
 
     var link = document.getElementsByClassName("link");
     var sidebar_texts = document.getElementsByClassName("sidebar-text");

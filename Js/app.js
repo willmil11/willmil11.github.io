@@ -89,7 +89,7 @@
     mainWrapper.style.overflowX = 'auto'
     
     // Setup initial styles
-    sidebar.style.backgroundColor = "rgb(240, 238, 2305)"
+    sidebar.style.backgroundColor = "rgb(240, 238, 230)"
     sidebar.style.position = "fixed"
     sidebar.style.top = "0"
     sidebar.style.left = "0"

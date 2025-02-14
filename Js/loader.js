@@ -13,9 +13,10 @@ loading.style.backgroundColor = "rgb(255, 255, 255)"
 var style = function(){
     loading.style.width = "fit-content"
     loading.style.height = "fit-content"
+    loading.style.padding = window.innerWidth * window.innerHeight / 100 / 500 + "px"
+    loading.style.borderRadius = window.innerWidth * window.innerHeight / 100 / 400 + "px"
     loading.style.marginTop = window.innerHeight / 2 - loading.offsetHeight / 2 + "px"
     loading.style.marginLeft = window.innerWidth / 2 - loading.offsetWidth / 2 + "px"
-    loading.style.borderRadius = window.innerWidth * window.innerHeight / 4000 + "px"
 }
 
 var captchaSucess = function(){

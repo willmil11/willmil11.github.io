@@ -1,190 +1,226 @@
-var content = document.getElementById("content");
-var sidebar = document.getElementById("sidebar");
-var scrollable = document.getElementById("scrollable");
-
-var hello_there = document.getElementById("hello-there");
-var hello_there_sidebar = document.getElementById("hello-there-sidebar");
-var sidebar_title = document.getElementById("sidebar-title");
-
-var my_projects = document.getElementById("my-projects");
-var my_projects_sidebar = document.getElementById("my-projects-sidebar");
-
-var my_coding_skills = document.getElementById("my-coding-skills");
-var my_coding_skills_sidebar = document.getElementById("my-coding-skills-sidebar");
-
-var contact_me = document.getElementById("contact-me");
-var contact_me_sidebar = document.getElementById("contact-me-sidebar");
-
-document.body.style.margin = "0px";
-content.style.backgroundColor = "rgb(21, 21, 20)";
-document.body.style.overflow = "hidden";
-
-sidebar.style.overflow = "auto";
-scrollable.style.overflow = "auto";
-
-scrollable.style.position = "absolute";
-scrollable.style.display = "absolute";
-sidebar.style.position = "absolute";
-sidebar.style.display = "absolute";
-
-sidebar.onselectstart = function (event){
-    event.preventDefault();
-}
-sidebar.onselect = function (event){
-    event.preventDefault();
-}
-sidebar.onselectend = function (event){
-    event.preventDefault();
-}
-sidebar.onselectionchange = function (event){
-    event.preventDefault();
-}
-
-hello_there_sidebar.onclick = function () {
-    //Focus on hello_there
-    hello_there.scrollIntoView();
-}
-
-my_projects_sidebar.onclick = function () {
-    //Focus on my_projects
-    my_projects.scrollIntoView();
-}
-
-my_coding_skills_sidebar.onclick = function () {
-    //Focus on my_coding_skills
-    my_coding_skills.scrollIntoView();
-}
-
-contact_me_sidebar.onclick = function () {
-    //Focus on contact_me
-    contact_me.scrollIntoView();
-}
-
-var link = document.getElementsByClassName("link");
-var index = 0;
-while (index < link.length) {
-    link[index].style.color = "rgb(80, 255, 80)";
-    link[index].style.fontFamily = "Arial";
-    link[index].style.textDecoration = "underline";
-    link[index].style.cursor = "pointer";
-    (function(item){
-        item.onmouseover = function () {
-            item.style.color = "rgb(255, 80, 80)";
+(async function(){
+    // Inject custom scrollbar CSS
+    var style = document.createElement('style');
+    style.textContent = `
+        :root {
+            --scrollbar-bg: rgb(240, 238, 230);
+            --scrollbar-thumb: rgb(200, 198, 190);
+            --scrollbar-thumb-hover: rgb(180, 178, 170);
         }
-        item.onmouseout = function () {
-            item.style.color = "rgb(80, 255, 80)";
+
+        *::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+            background-color: var(--scrollbar-bg);
         }
-    })(link[index]);
-    index += 1;
-}
 
-var style = function () {
-    content.style.height = (window.innerHeight + "px");
-    content.style.width = (window.innerWidth + "px");
-    sidebar.style.height = (window.innerHeight + "px");
-    sidebar.style.width = "fit-content"
-    sidebar.style.paddingRight = ((window.innerWidth / 100) + "px");
-    sidebar.style.paddingLeft = ((window.innerWidth / 100) + "px");
+        *::-webkit-scrollbar-track {
+            background-color: var(--scrollbar-bg);
+        }
 
-    var link = document.getElementsByClassName("link");
-    var sidebar_texts = document.getElementsByClassName("sidebar-text");
-    var titles = document.getElementsByClassName("title");
-    var texts = document.getElementsByClassName("text");
-    var sidebar_titles = document.getElementsByClassName("sidebar-title");
+        *::-webkit-scrollbar-thumb {
+            background-color: var(--scrollbar-thumb);
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
 
-    var sizeref;
-    if (window.innerWidth > window.innerHeight) {
-        sizeref = window.innerWidth;
+        *::-webkit-scrollbar-thumb:hover {
+            background-color: var(--scrollbar-thumb-hover);
+        }
+
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg);
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Ensure paragraph is fully visible */
+        #home p {
+            max-width: 100%;
+            width: 100%;
+            overflow-wrap: break-word;
+            word-wrap: break-word;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        #main {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: auto;
+            padding-right: 20px !important;
+            box-sizing: border-box;
+        }
+    `;
+    document.head.appendChild(style);
+
+    document.body.style.backgroundColor = "rgb(240, 238, 230)"
+    document.body.style.margin = "0px"
+    document.body.style.padding = "0px"
+    document.body.style.fontFamily = "Rubik"
+    document.body.style.minHeight = "100vh"
+    // CHANGED: was "hidden"
+    document.body.style.overflow = "auto"
+    
+    var MIN_WIDTH = 200
+    
+    var getHandleSpacing = function() {
+        return window.innerHeight / 40
     }
-    else {
-        sizeref = window.innerHeight;
+
+    var getScalingOrigin = function(){
+        return window.innerWidth * window.innerHeight / 3000
+    }
+    
+    var originalMain = document.getElementById("main")
+    var sidebar = document.getElementById("sidebar")
+    
+    // Create wrapper with precise dimensions
+    var mainWrapper = document.createElement('div')
+    mainWrapper.style.position = 'fixed'
+    mainWrapper.style.top = '0'
+    mainWrapper.style.right = '10px'
+    mainWrapper.style.bottom = '10px'
+    mainWrapper.style.overflowY = 'hidden'
+    // CHANGED: was "hidden"
+    mainWrapper.style.overflowX = 'auto'
+    
+    // Setup initial styles
+    sidebar.style.backgroundColor = "rgb(255, 255, 255)"
+    sidebar.style.position = "fixed"
+    sidebar.style.top = "0"
+    sidebar.style.left = "0"
+    sidebar.style.height = "100%"
+    sidebar.style.paddingLeft = getScalingOrigin() / 10 + "px"
+    sidebar.style.zIndex = "1"
+    
+    originalMain.style.backgroundColor = "rgb(240, 238, 230)"
+    originalMain.style.height = '100%'
+    originalMain.style.overflowY = 'scroll'
+    originalMain.style.overflowX = 'auto'
+    originalMain.style.position = "relative"
+    originalMain.style.minWidth = "600px"
+    originalMain.style.width = "100%"
+    
+    // Append elements
+    originalMain.parentNode.insertBefore(mainWrapper, originalMain)
+    mainWrapper.appendChild(originalMain)
+    
+    focused = "home"
+
+    function changeFocused(newFocused){
+        focused = newFocused
+
+        if (focused == "home"){
+            document.getElementById("home").style.display = "block"
+            document.getElementById("projects").style.display = "none"
+            document.getElementById("contact").style.display = "none"
+        }
+        else if (focused == "projects"){
+            document.getElementById("home").style.display = "none"
+            document.getElementById("projects").style.display = "block"
+            document.getElementById("contact").style.display = "none"
+        }
+        else if (focused == "contact"){
+            document.getElementById("home").style.display = "none"
+            document.getElementById("projects").style.display = "none"
+            document.getElementById("contact").style.display = "block"
+        }
     }
 
-    sidebar.style.borderRight = (sizeref / 800) + "px solid rgb(70, 70, 70)";
+    changeFocused("home")
+    
+    // Create resize handle and border
+    var resizeHandle = document.createElement('div')
+    resizeHandle.style.width = '8px'
+    resizeHandle.style.position = 'absolute'
+    resizeHandle.style.right = '-8px'
+    resizeHandle.style.cursor = 'col-resize'
+    resizeHandle.style.backgroundColor = 'rgb(223, 221, 221)'
+    resizeHandle.style.zIndex = "1000"
+    resizeHandle.style.borderRadius = "4px"
+    
+    var borderElement = document.createElement('div')
+    borderElement.style.position = 'absolute'
+    borderElement.style.right = '-8px'
+    borderElement.style.backgroundColor = 'rgb(223, 221, 221)'
+    borderElement.style.zIndex = '1'
+    borderElement.style.borderRadius = "4px"
+    
+    sidebar.appendChild(resizeHandle)
+    sidebar.appendChild(borderElement)
+    
+    // Resize functionality
+    var isResizing = false
+    var startX, startWidth
 
-    var index = 0;
-    while (index < sidebar_titles.length) {
-        sidebar_titles[index].style.fontSize = (sizeref / 35) + "px";
-        sidebar_titles[index].style.color = "rgb(5, 160, 240)";
-        sidebar_titles[index].style.fontFamily = "Arial";
-        sidebar_titles[index].style.textAlign = "center";
-        index += 1;
-    }
+    resizeHandle.addEventListener('mousedown', (e) => {
+        isResizing = true
+        startX = e.clientX
+        startWidth = parseInt(window.getComputedStyle(sidebar).width)
+        document.body.style.userSelect = 'none'
+        e.preventDefault()
+    })
 
-    var index = 0;
-    while (index < sidebar_texts.length) {
-        sidebar_texts[index].style.fontSize = (sizeref / 48) + "px";
-        sidebar_texts[index].style.color = "rgb(255, 255, 255)";
-        sidebar_texts[index].style.fontFamily = "Arial";
-        sidebar_texts[index].style.marginLeft = ((window.innerWidth / 100) + "px");
-        sidebar_texts[index].style.cursor = "pointer";
-        (function(item){
-            item.onmouseover = function () {
-                item.style.color = "rgb(5, 160, 240)";
+    document.addEventListener('mousemove', (e) => {
+        if (!isResizing) return
+        
+        var width = startWidth + (e.clientX - startX)
+        width = Math.max(MIN_WIDTH, width)
+        width = Math.min(width, window.innerWidth * 0.4)
+        
+        sidebar.style.width = width + 'px'
+        mainWrapper.style.left = width + 'px'
+    })
+
+    document.addEventListener('mouseup', () => {
+        isResizing = false
+        document.body.style.userSelect = ''
+    })
+
+    var style = function(){
+        if (!sidebar.style.width) {
+            sidebar.style.width = window.innerWidth / 4 + "px"
+            if (parseFloat(sidebar.style.width) < 200){
+                sidebar.style.width = "200px"
             }
-            item.onmouseout = function () {
-                item.style.color = "rgb(255, 255, 255)";
-            }
-        })(sidebar_texts[index]);
-        index += 1;
+        }
+        
+        borderElement.style.width = getScalingOrigin() / 50 + "px"
+        
+        var spacing = getHandleSpacing()
+        resizeHandle.style.top = spacing + 'px'
+        resizeHandle.style.height = `calc(100% - ${spacing * 2}px)`
+        borderElement.style.top = spacing + 'px'
+        borderElement.style.height = `calc(100% - ${spacing * 2}px)`
+        
+        mainWrapper.style.left = sidebar.style.width
+        
+        var sidebarWidth = parseFloat(sidebar.style.width)
+        var remainingWidth = window.innerWidth - sidebarWidth
+        var basePadding = remainingWidth * 0.033
+        var maxPadding = 40
+        originalMain.style.paddingLeft = Math.min(basePadding, maxPadding) + parseFloat(sidebar.style.paddingLeft) + "px"
     }
 
-    var index = 0;
-    while (index < titles.length) {
-        titles[index].style.fontSize = (sizeref / 30) + "px";
-        titles[index].style.marginLeft = ((window.innerWidth / 100) + "px");
-        titles[index].style.color = "rgb(255, 255, 255)";
-        titles[index].style.fontFamily = "Arial";
-        index += 1;
-    }
+    style()
+    window.onresize = style
 
-    var index = 0;
-    while (index < texts.length) {
-        texts[index].style.fontSize = (sizeref / 48) + "px";
-        texts[index].style.color = "rgb(255, 255, 255)";
-        texts[index].style.fontFamily = "Arial";
-        texts[index].style.marginLeft = ((window.innerWidth / 100) + "px");
-        index += 1;
-    }
+    var homeButton = document.getElementById("home_button")
+    homeButton.addEventListener("click", function(){
+        changeFocused("home")
+    })
 
-    scrollable.style.height = (window.innerHeight + "px");
-    scrollable.style.width = ((window.innerWidth - sidebar.offsetWidth) + "px");
-    scrollable.style.marginLeft = (sidebar.offsetWidth + "px");
+    var projectsButton = document.getElementById("projects_button")
+    projectsButton.addEventListener("click", function(){
+        changeFocused("projects")
+    })
 
-    var index = 0;
-    while (index < link.length) {
-        link[index].style.color = "rgb(80, 255, 80)";
-        link[index].style.fontFamily = "Arial";
-        link[index].style.textDecoration = "underline";
-        link[index].style.cursor = "pointer";
-        (function(item){
-            item.onmouseover = function () {
-                item.style.color = "rgb(255, 80, 80)";
-            }
-            item.onmouseout = function () {
-                item.style.color = "rgb(80, 255, 80)";
-            }
-            item.onclick = function(){
-                //Send href to window (this is an iframe)
-                window.top.postMessage(JSON.stringify({
-                    "type": "redirect",
-                    "data": item.href
-                }), "*");
-            }
-        })(link[index]);
-        index += 1;
-    }
-}
-
-style();
-
-var oldHeight = window.innerHeight;
-var oldWidth = window.innerWidth;
-
-setInterval(function () {
-    if ((!(oldHeight === window.innerHeight)) || (!(oldWidth === window.innerWidth))) {
-        style();
-        oldHeight = window.innerHeight;
-        oldWidth = window.innerWidth;
-    }
-}, 25);
+    var contactButton = document.getElementById("contact_button")
+    contactButton.addEventListener("click", function(){
+        changeFocused("contact")
+    })
+})()

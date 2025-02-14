@@ -1,79 +1,19 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Loading...</title>
+        <title>
+            My portfolio
+        </title>
+        <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback" async defer></script>
     </head>
     <body>
-        <div id="content">
-            <div id="loading">
-                <h1 id="text">Loading...</h1>
+        <div id="loading">
+            <div class="g-recaptcha"
+                data-sitekey="6LeiOdcqAAAAAD3qdDPcJDKXZkkN__xhzu5MZ1lh"
+                data-callback="captchaSucess">
             </div>
-            <iframe id="iframe" src="./index.html"></iframe>
         </div>
+        <iframe id="portfolio_iframe" style="display: none;" src="./8mZSbL3yYuusviX5HC7un6XoqRA8HurisBO8Nisjgp1FWlc2Duibj6biopFDJJG11PfJw4LTNil-e7n29ChF0Q.html"></iframe>
     </body>
 </html>
-<script>
-    document.body.style.margin = "0px";
-    document.body.style.backgroundColor = "rgb(21, 21, 21)";
-    document.body.style.overflow = "hidden";
-    var content = document.getElementById("content");
-    var loading = document.getElementById("loading");
-    var text = document.getElementById("text");
-    var iframe = document.getElementById("iframe");
-
-    loading.onselectstart = function(event){
-        event.preventDefault();
-    }
-    loading.onselect = function(event){
-        event.preventDefault();
-    }
-    loading.onselectend = function(event){
-        event.preventDefault();
-    }
-    loading.onselectionchange = function(event){
-        event.preventDefault();
-    }
-    
-    iframe.style.display = "none";
-
-    var style = function(){
-        var sizeref;
-        if (window.innerWidth > window.innerHeight) {
-            sizeref = window.innerWidth;
-        } 
-        else {
-            sizeref = window.innerHeight;
-        }
-        content.style.height = window.innerHeight + "px";
-        content.style.width = window.innerWidth + "px";
-        loading.style.height = "fit-content";
-        loading.style.width = "fit-content";
-        content.style.backgroundColor = "rgb(21, 21, 20)";
-        loading.style.backgroundColor = "rgb(31, 31, 30)";
-        text.style.color = "rgb(255, 255, 255)";
-        text.style.fontFamily = "Arial";
-        text.style.fontSize = (sizeref / 30) + "px";
-        loading.style.padding = (sizeref / 100) + "px";
-        loading.style.border = (sizeref / 200) + "px solid rgb(255, 255, 255)";
-        loading.style.borderRadius = (sizeref / 100) + "px";
-        loading.style.marginTop = ((window.innerHeight / 2) - (loading.offsetHeight / 2)) + "px";
-        loading.style.marginLeft = ((window.innerWidth / 2) - (loading.offsetWidth / 2)) + "px";
-
-        //Scroll to top
-        window.scrollTo(0, 0);
-    }
-    style();
-    style();
-
-    var oldHeight = window.innerHeight;
-    var oldWidth = window.innerWidth;
-
-    var styleloop = setInterval(function(){
-        if ((!(oldHeight === window.innerHeight)) || (!(oldWidth === window.innerWidth))) {
-            oldHeight = window.innerHeight;
-            oldWidth = window.innerWidth;
-            style();
-        }
-    }, 25);
-</script>
-<script src="./Js/404.js"></script>
+<script src="./Js/loader.js"></script>

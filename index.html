@@ -73,7 +73,7 @@
                     These are my best public projects:
                 </p>
                 <ul class="text">
-                    <li><a href="https://github.com/willmil11/cleanai-c" target="_blank" rel="noopener noreferrer">cleanai-c</a>: A very user friendly CLI that allows you to train and/or pretrain transformers based LLMs from complete scratch. Made in C with no machine learning librairies such as tensorflow.</li>
+                    <li><a href="https://github.com/willmil11/cleanai-c" target="_blank" rel="noopener noreferrer">cleanai-c</a>: A very user friendly CLI that allows you to train and/or pretrain transformer based LLMs from complete scratch. Made in C with no machine learning librairies such as tensorflow.</li>
                     <li><a href="https://github.com/willmil11/nodegames" target="_blank" rel="noopener noreferrer">Nodegamesjs</a>: Long story short, pygames for nodejs.</li>
                     <li><a href="https://github.com/willmil11/quickserver" target="_blank" rel="noopener noreferrer">Quickserver</a>: A very easy to use and user friendly webserver written in C, extremely quick deploy with logs that can be transformed from json to human readable with the tool itself.</li>
                     <li><a href="https://github.com/willmil11/readyserver" target="_blank" rel="noopener noreferrer">Readyserver</a>: The previous version of quickserver made in pure javascript, learning C led me to believe this could be done a lot better in that language, leading to the creation of quickserver.</li>
@@ -90,7 +90,7 @@
                 <h1 class="header">Skills</h1>
                 <p class="text">Here are my programing skills, which by that I mean, what programing languages and markup languages I know how to use and have experience in:</p>
                 <ul class="text">
-                    <li>C (both user space, freestanding and integrated)</li>
+                    <li>C (userspace, freestanding and integrated)</li>
                     <li>Assembly (aarch64 and x86_64)</li>
                     <li>Javascript (both frontend and backend with nodejs)</li>
                     <li>Python</li>
@@ -386,7 +386,8 @@
         before = mobile() ? event.clientY : event.clientX
         downBias = sidebar_handle_bias
         sidebar_handle.setPointerCapture(event.pointerId)
-    }
+    	sidebar_handle.style.backgroundColor = "#757575";
+	}
 
     sidebar_handle.onpointermove = function(event) {
         if (!inhandle || before === null) {
@@ -425,11 +426,13 @@
         inhandle = false
         before = null
         sidebar_handle.releasePointerCapture(event.pointerId)
-    }
+    	sidebar_handle.style.backgroundColor = "#dfdddd";
+	}
 
     sidebar_handle.onpointercancel = function(event) {
         inhandle = false
         before = null
+		sidebar_handle.style.backgroundColor = "#dfdddd";
     }
 
     var taggers = []
@@ -444,10 +447,12 @@
         ;(function(index){
             taggers[index].onclick = function(){
                 tagged[index].style.display = ""
-                for (var subindex = 0; subindex < tagged.length; subindex++){
+				tagged[index].scrollTop = 0;
+                content.scrollTop = 0;
+				for (var subindex = 0; subindex < tagged.length; subindex++){
                     if (subindex != index){
                         tagged[subindex].style.display = "none";
-                        window.onresize();
+						window.onresize();
                     }
                 }
             }

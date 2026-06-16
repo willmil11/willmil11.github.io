@@ -330,7 +330,7 @@
 
             content.style.height = window.innerHeight - (sidebar.offsetHeight + window.innerHeight / 100) - size_factor / 32 + "px";
             content.style.marginTop = sidebar.offsetHeight + window.innerHeight / 100 + "px";
-            content.style.width = window.innerWidth - size_factor / 16 - size_factor / 32 + "px";
+            content.style.width = window.innerWidth - size_factor / 16 + "px";
 
             content.style.paddingTop = size_factor / 32 + "px";
             content.style.paddingLeft = size_factor / 16 + "px";
@@ -364,6 +364,14 @@
                 if (descendents[index].tagName.toLowerCase() == "li"){
                     descendents[index].style.marginLeft = size_factor / 48 + "px"
                 }
+            }
+
+            var pannels = document.getElementsByClassName("pannel");
+            for (var index = 0; index < pannels.length; index++){
+                var pannel = pannels[index];
+                pannel.style.width = "";
+
+                pannel.style.width = pannel.offsetWidth - size_factor / 32 + "px";
             }
         }
     }

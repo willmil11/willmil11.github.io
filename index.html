@@ -58,7 +58,7 @@
             <div id="#1" class="pannel">
                 <h1 class="header">Homepage</h1>
                 <p class="text">
-                    Hey there! I'm William, a 15 yo self taught french developer. (handle: willmil11)
+                    Hey there! I'm William, a <span id="age_replace">15</span>yo (yes, this number updates automatically) self taught french developer. (handle: willmil11)
                 </p>
                 <p class="text">
                     Welcome to my portfolio, the categories are above this text if you are on mobile or on the left if you are on desktop (you can click them to open them). You can drag the sidebar handle to resize it as well!
@@ -121,6 +121,7 @@
     </body>
 </html>
 <script>
+	document.getElementById("age_replace").innerHTML = ((Date.now() - new Date("oct. 11 2010")) / 1000 / 60 / 60 / 24 / 365.25).toFixed(2);
     for (var index = 1; index < document.getElementsByClassName("pannel").length; index++){
         document.getElementsByClassName("pannel")[index].style.display = "none";
     }
